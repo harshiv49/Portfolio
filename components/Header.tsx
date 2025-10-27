@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { links } from "@/lib/data";
 import clsx from "clsx";
+import { useActiveSessionContext } from "@/context/ActiveSessionContext";
 
 export const Header: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>("Projects");
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSessionContext();
 
   return (
     <header className="z-[999] relative">
@@ -32,7 +34,10 @@ export const Header: React.FC = () => {
                   { "text-gray-950": activeSection === link.name }
                 )}
                 href={link.hash}
-                onClick={() => setActiveSection(link.name)}
+                onClick={() => {
+                  setActiveSection(link.name);
+                  setTimeOfLastClick(Date.now());
+                }}
               >
                 {link.name}
                 {link.name === activeSection && (
