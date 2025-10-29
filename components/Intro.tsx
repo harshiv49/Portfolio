@@ -3,17 +3,20 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BsArrowRight, BsLinkedin } from "react-icons/bs";
+import { BsArrowRight, BsGithub, BsLinkedin } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import { FaGithubSquare } from "react-icons/fa";
+import { useActiveSessionContext } from "@/context/ActiveSessionContext";
 import { useSectionInView } from "@/lib/hooks";
+
 export default function Intro() {
+  const { setActiveSection, setTimeOfLastClick } = useActiveSessionContext();
   const { ref } = useSectionInView("Home", 0.5);
 
   return (
     <section
-      ref={ref}
       id="home"
+      ref={ref}
       className="mb-28 text-center sm:mb-0 max-w-[50rem] scroll-mt-[100rem]"
     >
       <div className="flex items-center justify-center">
@@ -52,7 +55,7 @@ export default function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="font-bold">Hello, I&apos;m Harshiv.</span> I&apos;m a{" "}
+        <span className="font-bold">Hello, I'm Harshiv.</span> I'm a{" "}
         <span className="font-bold">full-stack developer</span> with{" "}
         <span className="font-bold">2 years</span> of experience. I enjoy
         building <span className="italic">sites & apps</span>. My focus is{" "}
@@ -68,6 +71,10 @@ export default function Intro() {
           href="#contact"
           className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 
           hover:scale-110 hover:bg-gray-950 active:scale-105 transition "
+          onClick={() => {
+            setActiveSection("Contact");
+            setTimeOfLastClick(Date.now());
+          }}
         >
           Contact me here{" "}
           <BsArrowRight className="opacity-70 group-hover:translate-x-1 transition" />{" "}
